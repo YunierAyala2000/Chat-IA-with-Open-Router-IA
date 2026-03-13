@@ -1,0 +1,25 @@
+# Build outputs
+dist
+build
+
+# Dependencies
+node_modules
+
+docs
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.*
+
+# Cache
+.cache
+.vite
+
+# Auto-generated
+*.min.js
+*.min.css
