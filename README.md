@@ -1,21 +1,59 @@
-# Plantilla Base — React + TypeScript + Tailwind CSS
+# Chat IA con OpenRouter
 
-Plantilla de arranque rápido para proyectos frontend modernos. Incluye React 19, TypeScript, Tailwind CSS v4, componentes shadcn/ui, iconos Lucide y herramientas de calidad de código (ESLint + Prettier) preconfiguradas.
+Pequeña aplicación de chat construida con **React + Vite + Tailwind CSS** que se conecta a **OpenRouter** para generar respuestas de IA.
+
+Esta app incluye:
+
+- Modo claro/oscuro con persistencia en `localStorage`.
+- Indicador de “typing” mientras llega la respuesta.
+- Manejo automático de modelos gratuitos (`:free`) y reintentos.
+- Mensaje claro cuando la API key expira (401).
+- UI moderna y responsive (móvil/desktop).
 
 ---
 
-## Tecnologías principales
+## 📸 Capturas de pantalla
 
-| Herramienta                                  | Versión | Descripción                                   |
-| -------------------------------------------- | ------- | --------------------------------------------- |
-| [React](https://react.dev)                   | 19      | Biblioteca de interfaces de usuario           |
-| [TypeScript](https://www.typescriptlang.org) | 5.x     | Tipado estático                               |
-| [Vite](https://vite.dev)                     | 7       | Bundler y servidor de desarrollo ultrarrápido |
-| [Tailwind CSS](https://tailwindcss.com)      | 4       | Framework CSS utilitario                      |
-| [shadcn/ui](https://ui.shadcn.com)           | 4       | Componentes accesibles basados en Radix UI    |
-| [Lucide React](https://lucide.dev)           | latest  | Librería de iconos                            |
-| [Sonner](https://sonner.emilkowal.ski)       | latest  | Notificaciones tipo toast                     |
-| [Vaul](https://vaul.emilkowal.ski)           | latest  | Componente Drawer (cajón deslizante)          |
+### Modo (desktop)
+
+![Chat IA - Modo claro](public/pc-claro.png)
+![Chat IA - Modo Oscuro](public/pc-oscuro.png)
+
+### movil
+
+![Chat movil - Modo claro](public/movil-claro.png)
+![Chat movil - Modo claro](public/movil-oscuro.png)
+
+## ⚙️ Configuración inicial
+
+### 1) Instalar dependencias
+
+```bash
+npm install
+```
+
+### 2) Configurar la API Key (requerido)
+
+Crea un archivo `.env` en la raíz con tu clave de OpenRouter:
+
+```env
+VITE_OPEN_ROUTER_IA_API_KEY=tu_api_key_aqui
+```
+
+> Si la API key expira, la app mostrará un mensaje indicando que debes regenerarla en:
+> `https://openrouter.ai/settings/keys`
+
+### 3) Ejecutar en modo desarrollo
+
+```bash
+npm run dev
+```
+
+### 4) Construir para producción
+
+```bash
+npm run build
+```
 
 ---
 
@@ -206,3 +244,5 @@ npm run format:check  # Solo verifica sin modificar
 ## Fuente tipográfica
 
 Se usa **Geist Variable** de `@fontsource-variable/geist`, importada en `index.css`. Es la misma fuente utilizada por Vercel/Next.js.
+
+---
