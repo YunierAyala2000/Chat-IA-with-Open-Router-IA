@@ -146,8 +146,8 @@ function App() {
         <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/15 blur-3xl dark:bg-purple-600/25" />
       </div>
 
-      <div className="relative mx-4 w-full max-w-md">
-        <div className="flex h-[680px] flex-col overflow-hidden rounded-2xl border border-slate-200/60 bg-white/70 shadow-2xl shadow-black/10 backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:shadow-black/50">
+      <div className="relative mx-4 w-full max-w-xl sm:max-w-md">
+        <div className="flex h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-slate-200/60 bg-white/70 shadow-2xl shadow-black/10 backdrop-blur-xl sm:h-[680px] sm:max-h-[680px] dark:border-white/10 dark:bg-white/5 dark:shadow-black/50">
           <div className="h-1 w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500" />
 
           <header className="flex items-center justify-between px-6 py-4">
@@ -165,7 +165,7 @@ function App() {
               <Button
                 variant="outline"
                 onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/60 text-slate-900 shadow-sm ring-1 ring-slate-200/80 transition hover:bg-white/80 dark:bg-slate-950/40 dark:text-white dark:ring-white/10 dark:hover:bg-slate-950/70"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/60 text-white shadow-sm ring-1 ring-slate-200/80 transition hover:bg-white/80 dark:bg-slate-950/40 dark:text-white dark:ring-white/10 dark:hover:bg-teal-100"
                 aria-label={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
               >
                 {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -175,12 +175,12 @@ function App() {
 
           <div
             ref={listRef}
-            className="scrollbar-thin scrollbar-thumb-slate-300/50 scrollbar-track-transparent dark:scrollbar-thumb-white/10 flex-1 space-y-4 overflow-y-auto px-6 pt-2 pb-6"
+            className="scrollbar-thin scrollbar-thumb-slate-300/50 scrollbar-track-transparent dark:scrollbar-thumb-white/10 flex-1 space-y-4 overflow-y-auto px-4 pt-2 pb-6 sm:px-6"
           >
             {messages.map((message) => (
               <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[75%] rounded-2xl px-4 py-3 text-sm shadow-sm ${
+                  className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm shadow-sm sm:max-w-[75%] ${
                     message.role === "user"
                       ? "bg-emerald-100 text-slate-900 ring-emerald-200 dark:bg-emerald-500/20 dark:text-white dark:ring-emerald-500/30"
                       : "bg-slate-100/70 text-slate-900 ring-slate-200/50 dark:bg-white/10 dark:text-white dark:ring-white/10"
@@ -190,16 +190,28 @@ function App() {
                 </div>
               </div>
             ))}
+
+            {isSending && (
+              <div className="flex justify-start">
+                <div className="max-w-[75%] rounded-2xl bg-slate-100/70 px-4 py-3 text-sm shadow-sm ring-1 ring-slate-200/50 dark:bg-white/10 dark:ring-white/10">
+                  <div className="flex items-center gap-2">
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-slate-400/80 dark:bg-white/40" />
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-slate-400/80 delay-75 dark:bg-white/40" />
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-slate-400/80 delay-150 dark:bg-white/40" />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
-          <div className="border-t border-slate-200/50 px-6 py-4 dark:border-white/10">
-            <div className="flex items-center gap-3">
+          <div className="border-t border-slate-200/50 px-4 py-4 sm:px-6 dark:border-white/10">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <Input
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Escribe un mensaje..."
-                className="h-10 bg-white/60 text-slate-900 placeholder:text-slate-500 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
+                className="h-10 flex-1 bg-white/60 text-slate-900 placeholder:text-slate-500 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
               />
               <Button
                 onClick={sendMessage}
