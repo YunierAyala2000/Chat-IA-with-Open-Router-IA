@@ -262,9 +262,8 @@ function App() {
               </div>
             )}
 
-            {/* Mensaje vacío (placeholder cuando no hay mensajes) */}
             {messages.length === 1 && !isSending && (
-              <div className="flex h-full flex-col items-center justify-center text-center opacity-50">
+              <div className="flex h-auto flex-col items-center justify-center py-10 text-center opacity-50">
                 <Bot className="h-12 w-12 text-slate-300 dark:text-slate-700" />
                 <p className="mt-2 text-sm text-slate-400 dark:text-slate-600">
                   No hay mensajes aún. ¡Comienza la conversación!
