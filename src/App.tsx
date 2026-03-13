@@ -162,14 +162,14 @@ function App() {
                 <span>En línea</span>
               </div>
 
-              <button
-                type="button"
+              <Button
+                variant="outline"
                 onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/60 text-slate-900 shadow-sm ring-1 ring-slate-200/80 transition hover:bg-white/80 dark:bg-slate-950/40 dark:text-white dark:ring-white/10 dark:hover:bg-slate-950/70"
                 aria-label={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
               >
-                {theme === "dark" ? <Sun className="h-5 w-5 bg-white dark:bg-white" /> : <Moon className="h-5 w-5" />}
-              </button>
+                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              </Button>
             </div>
           </header>
 
