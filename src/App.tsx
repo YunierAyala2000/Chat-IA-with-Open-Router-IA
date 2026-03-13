@@ -299,10 +299,9 @@ function App() {
               </Button>
             </div>
 
-            {/* Mensaje informativo */}
             <p className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500">
               <Zap className="mr-1 inline h-3 w-3" />
-              Presiona Enter para enviar · Modelos gratuitos de OpenRouter
+              Presiona Enter para enviar · Modelos gratuitos de OpenRouter · Desarrollado por Junier Ayala Perez
             </p>
           </div>
         </div>
