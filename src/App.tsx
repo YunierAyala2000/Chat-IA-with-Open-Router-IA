@@ -142,7 +142,7 @@ function App() {
                       {/* Efecto de brillo en hover */}
                       <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
 
-                      <p className="text-sm leading-relaxed break-words whitespace-pre-wrap sm:text-base lg:text-lg">
+                      <p className="text-sm leading-relaxed break-words whitespace-pre-wrap sm:text-base lg:text-base">
                         {message.content}
                       </p>
 
