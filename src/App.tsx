@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Moon, Send, Sun } from "lucide-react";
+import { Moon, Send, Sun, Bot, User, Sparkles, Zap } from "lucide-react";
 import { sendChatCompletion } from "@/services/openRouterIA-services";
 
 type Message = {
@@ -50,13 +50,11 @@ function App() {
   const getFreeModels = async (): Promise<string[]> => {
     try {
       const res = await fetch("https://openrouter.ai/api/v1/models");
-
       const data = (await res.json()) as { data: Array<{ id: string }> };
-
       return data.data.map((m) => m.id).filter((id) => id.endsWith(":free"));
     } catch (e) {
       console.error("Error fetching models", e);
-      return ["openrouter/free"]; // fallback seguro
+      return ["openrouter/free"];
     }
   };
 
@@ -94,11 +92,8 @@ function App() {
             ],
             { model },
           );
-
-          console.log("✅ Modelo usado:", model);
           break;
         } catch (err) {
-          console.log("❌ Falló modelo:", model);
           lastError = err;
         }
       }
@@ -140,87 +135,172 @@ function App() {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-slate-50 via-purple-50 to-slate-100 dark:from-slate-900 dark:via-purple-950 dark:to-slate-900">
-      {/* Glow ambiental */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-purple-500/15 blur-3xl dark:bg-purple-600/25" />
-      </div>
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/50 dark:from-slate-950 dark:via-indigo-950/30 dark:to-purple-950/50">
+      {/* Fondo decorativo */}
+      <div
+        className="absolute inset-0 opacity-20 dark:opacity-10"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      />
 
-      <div className="relative mx-4 w-full max-w-xl sm:max-w-md">
-        <div className="flex h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-slate-200/60 bg-white/70 shadow-2xl shadow-black/10 backdrop-blur-xl sm:h-[680px] sm:max-h-[680px] dark:border-white/10 dark:bg-white/5 dark:shadow-black/50">
-          <div className="h-1 w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500" />
-
-          <header className="flex items-center justify-between px-6 py-4">
-            <div>
-              <h1 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Chat IA</h1>
-              <p className="text-xs text-slate-600 dark:text-white/60">Un diseño estilo chat para conversar.</p>
-            </div>
-
+      <div className="relative mx-auto flex h-full max-w-7xl items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div className="flex h-full w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-white/20 bg-white/90 shadow-2xl backdrop-blur-xl sm:h-[90vh] sm:rounded-3xl dark:border-white/5 dark:bg-slate-900/90">
+          {/* Header Mejorado */}
+          <header className="flex items-center justify-between border-b border-slate-200/50 px-4 py-3 sm:px-6 sm:py-4 dark:border-white/5">
             <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 rounded-full bg-white/40 px-3 py-1 text-xs font-medium text-slate-800 shadow-sm ring-1 ring-slate-200/70 dark:bg-slate-950/40 dark:text-white dark:ring-white/10">
-                <span className="inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-                <span>En línea</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 shadow-lg shadow-indigo-500/30">
+                <Bot className="h-5 w-5 text-white" />
               </div>
-
-              <Button
-                variant="outline"
-                onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/60 text-white shadow-sm ring-1 ring-slate-200/80 transition hover:bg-white/80 dark:bg-slate-950/40 dark:text-white dark:ring-white/10 dark:hover:bg-teal-100"
-                aria-label={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
-              >
-                {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-              </Button>
+              <div>
+                <h1 className="flex items-center gap-2 text-lg font-semibold text-slate-900 sm:text-xl dark:text-white">
+                  Asistente IA
+                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                    <Sparkles className="h-3 w-3" />
+                    Pro
+                  </span>
+                </h1>
+                <p className="text-xs text-slate-500 sm:text-sm dark:text-slate-400">
+                  Conectado a OpenRouter · Modelos gratuitos
+                </p>
+              </div>
             </div>
+
+            <Button
+              variant="ghost"
+              onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
+              className="h-10 w-10 rounded-full bg-slate-100/80 text-slate-700 transition-all hover:scale-110 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700"
+              aria-label={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
+              ) : (
+                <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
+              )}
+            </Button>
           </header>
 
+          {/* Área de mensajes mejorada */}
           <div
             ref={listRef}
-            className="scrollbar-thin scrollbar-thumb-slate-300/50 scrollbar-track-transparent dark:scrollbar-thumb-white/10 flex-1 space-y-4 overflow-y-auto px-4 pt-2 pb-6 sm:px-6"
+            className="scrollbar-thin scrollbar-thumb-slate-300/50 scrollbar-track-transparent hover:scrollbar-thumb-slate-400/50 dark:scrollbar-thumb-white/10 dark:hover:scrollbar-thumb-white/20 flex-1 space-y-4 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6"
           >
-            {messages.map((message) => (
-              <div key={message.id} className={`flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
+            {messages.map((message, index) => (
+              <div
+                key={message.id}
+                className={`flex ${message.role === "user" ? "justify-end" : "justify-start"} animate-in fade-in-0 slide-in-from-bottom-2 duration-300`}
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
                 <div
-                  className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm shadow-sm sm:max-w-[75%] ${
-                    message.role === "user"
-                      ? "bg-emerald-100 text-slate-900 ring-emerald-200 dark:bg-emerald-500/20 dark:text-white dark:ring-emerald-500/30"
-                      : "bg-slate-100/70 text-slate-900 ring-slate-200/50 dark:bg-white/10 dark:text-white dark:ring-white/10"
-                  }`}
+                  className={`flex max-w-[85%] items-start gap-2 sm:max-w-[75%] ${message.role === "user" ? "flex-row-reverse" : "flex-row"}`}
                 >
-                  {message.content}
+                  {/* Avatar */}
+                  <div
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full shadow-md sm:h-9 sm:w-9 ${
+                      message.role === "user"
+                        ? "bg-gradient-to-br from-indigo-500 to-purple-600"
+                        : "bg-gradient-to-br from-emerald-500 to-teal-600"
+                    }`}
+                  >
+                    {message.role === "user" ? (
+                      <User className="h-4 w-4 text-white sm:h-5 sm:w-5" />
+                    ) : (
+                      <Bot className="h-4 w-4 text-white sm:h-5 sm:w-5" />
+                    )}
+                  </div>
+
+                  {/* Mensaje */}
+                  <div
+                    className={`group relative rounded-2xl px-4 py-2.5 text-sm shadow-sm transition-all hover:shadow-md sm:px-5 sm:py-3 sm:text-base ${
+                      message.role === "user"
+                        ? "rounded-tr-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+                        : "rounded-tl-sm bg-white text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                    }`}
+                  >
+                    <p className="leading-relaxed break-words whitespace-pre-wrap">{message.content}</p>
+
+                    {/* Timestamp opcional */}
+                    <span className="absolute right-2 bottom-0.5 text-[10px] opacity-0 transition-opacity group-hover:opacity-40 sm:bottom-1">
+                      {new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
 
+            {/* Indicador de escritura mejorado */}
             {isSending && (
-              <div className="flex justify-start">
-                <div className="max-w-[75%] rounded-2xl bg-slate-100/70 px-4 py-3 text-sm shadow-sm ring-1 ring-slate-200/50 dark:bg-white/10 dark:ring-white/10">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-slate-400/80 dark:bg-white/40" />
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-slate-400/80 delay-75 dark:bg-white/40" />
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-slate-400/80 delay-150 dark:bg-white/40" />
+              <div className="animate-in fade-in-0 slide-in-from-bottom-2 flex justify-start duration-300">
+                <div className="flex max-w-[75%] items-start gap-2">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 shadow-md sm:h-9 sm:w-9">
+                    <Bot className="h-4 w-4 text-white sm:h-5 sm:w-5" />
+                  </div>
+                  <div className="rounded-2xl rounded-tl-sm bg-white px-5 py-4 shadow-sm dark:bg-slate-800">
+                    <div className="flex items-center gap-1.5">
+                      <div className="flex space-x-1">
+                        <div
+                          className="h-2 w-2 animate-bounce rounded-full bg-emerald-500"
+                          style={{ animationDelay: "0ms" }}
+                        />
+                        <div
+                          className="h-2 w-2 animate-bounce rounded-full bg-emerald-500"
+                          style={{ animationDelay: "150ms" }}
+                        />
+                        <div
+                          className="h-2 w-2 animate-bounce rounded-full bg-emerald-500"
+                          style={{ animationDelay: "300ms" }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
+
+            {/* Mensaje vacío (placeholder cuando no hay mensajes) */}
+            {messages.length === 1 && !isSending && (
+              <div className="flex h-full flex-col items-center justify-center text-center opacity-50">
+                <Bot className="h-12 w-12 text-slate-300 dark:text-slate-700" />
+                <p className="mt-2 text-sm text-slate-400 dark:text-slate-600">
+                  No hay mensajes aún. ¡Comienza la conversación!
+                </p>
+              </div>
+            )}
           </div>
 
-          <div className="border-t border-slate-200/50 px-4 py-4 sm:px-6 dark:border-white/10">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Input
-                value={draft}
-                onChange={(event) => setDraft(event.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Escribe un mensaje..."
-                className="h-10 flex-1 bg-white/60 text-slate-900 placeholder:text-slate-500 dark:bg-white/10 dark:text-white dark:placeholder:text-white/40"
-              />
+          <div className="border-t border-slate-200/50 bg-slate-50/50 px-4 py-3 backdrop-blur-sm sm:px-6 sm:py-4 dark:border-white/5 dark:bg-slate-900/50">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="relative flex-1">
+                <Input
+                  value={draft}
+                  onChange={(event) => setDraft(event.target.value)}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Escribe tu mensaje..."
+                  className="h-11 w-full rounded-xl border border-slate-200/60 bg-white pr-12 pl-4 text-sm text-slate-900 shadow-inner transition-all placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 sm:h-12 sm:text-base dark:border-white/10 dark:bg-slate-800/80 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-indigo-500 dark:focus:ring-indigo-500/30"
+                />
+                {draft.length > 0 && (
+                  <span className="absolute top-1/2 right-3 -translate-y-1/2 text-xs text-slate-400">
+                    {draft.length}
+                  </span>
+                )}
+              </div>
+
               <Button
                 onClick={sendMessage}
-                disabled={!draft.trim()}
-                className="flex h-10 items-center justify-center rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 px-4 py-2 font-semibold text-white shadow-lg shadow-purple-900/40 transition-all duration-200 hover:from-purple-500 hover:to-indigo-500 disabled:cursor-not-allowed disabled:opacity-40"
+                disabled={!draft.trim() || isSending}
+                className="group relative h-11 w-11 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 p-0 font-semibold text-white shadow-lg shadow-indigo-600/30 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-indigo-600/40 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:scale-100 sm:h-12 sm:w-12"
               >
-                <Send className="h-4 w-4" />
+                <span className="absolute inset-0 bg-white/20 opacity-0 transition-opacity group-hover:opacity-100" />
+                <Send className="relative h-4 w-4 sm:h-5 sm:w-5" />
               </Button>
             </div>
+
+            {/* Mensaje informativo */}
+            <p className="mt-2 text-center text-xs text-slate-400 dark:text-slate-500">
+              <Zap className="mr-1 inline h-3 w-3" />
+              Presiona Enter para enviar · Modelos gratuitos de OpenRouter
+            </p>
           </div>
         </div>
       </div>
