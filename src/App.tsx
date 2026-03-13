@@ -172,9 +172,9 @@ function App() {
 
               <div>
                 <div className="flex items-center gap-2">
-                  <h1 className="text-base font-bold text-slate-900 sm:text-lg lg:text-xl dark:text-white">
+                  <h2 className="text-xl font-bold text-slate-900 sm:text-2xl lg:text-3xl dark:text-white">
                     Asistente IA
-                  </h1>
+                  </h2>
 
                   {/* Badge mejorado */}
                   <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-2 py-0.5 text-[10px] font-medium text-white shadow-sm sm:text-xs">
@@ -252,7 +252,9 @@ function App() {
                       {/* Efecto de brillo en hover */}
                       <div className="absolute inset-0 rounded-2xl bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
 
-                      <p className="leading-relaxed break-words whitespace-pre-wrap">{message.content}</p>
+                      <p className="text-sm leading-relaxed break-words whitespace-pre-wrap sm:text-base lg:text-lg">
+                        {message.content}
+                      </p>
 
                       {/* Metadata del mensaje */}
                       <div
@@ -341,7 +343,6 @@ function App() {
                   style={{ minHeight: "44px" }}
                 />
 
-                {/* Contador de caracteres y botón de limpiar */}
                 <div className="absolute right-3 bottom-2 flex items-center gap-2">
                   {draft.length > 0 && (
                     <>
