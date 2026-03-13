@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Moon, Send, Sun, Bot, User, Sparkles, Zap } from "lucide-react";
-import { sendChatCompletion } from "@/services/openRouterIA-services";
+import { OpenRouterError, sendChatCompletion } from "@/services/openRouterIA-services";
 
 type Message = {
   id: string;
@@ -114,12 +114,16 @@ function App() {
     } catch (error) {
       const errMessage = error instanceof Error ? error.message : "Error inesperado";
 
+      const isUnauthorized = error instanceof OpenRouterError && error.status === 401;
+
       setMessages((prev) => [
         ...prev,
         {
           id: crypto.randomUUID(),
           role: "assistant",
-          content: `Error: ${errMessage}`,
+          content: isUnauthorized
+            ? "Ups, parece que tu API key expiró. Ve a https://openrouter.ai/settings/keys, genera una nueva, pégala en tu archivo .env y vuelve a intentar."
+            : `Error: ${errMessage}`,
         },
       ]);
     } finally {
@@ -168,9 +172,9 @@ function App() {
             </div>
 
             <Button
-              variant="ghost"
+              variant="primary"
+              size="lg"
               onClick={() => setTheme((prev) => (prev === "dark" ? "light" : "dark"))}
-              className="h-10 w-10 rounded-full bg-slate-100/80 text-slate-700 transition-all hover:scale-110 hover:bg-slate-200 dark:bg-slate-800/80 dark:text-white dark:hover:bg-slate-700"
               aria-label={`Cambiar a modo ${theme === "dark" ? "claro" : "oscuro"}`}
             >
               {theme === "dark" ? (

@@ -35,6 +35,16 @@ function getOpenRouterApiKey(apiKey?: string) {
   return key;
 }
 
+export class OpenRouterError extends Error {
+  status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.status = status;
+    this.name = "OpenRouterError";
+  }
+}
+
 export async function sendChatCompletion(
   messages: ChatMessage[],
   options?: {
@@ -71,7 +81,10 @@ export async function sendChatCompletion(
 
   if (!response.ok) {
     const text = await response.text();
-    throw new Error(`OpenRouter request failed (${response.status} ${response.statusText}): ${text}`);
+    throw new OpenRouterError(
+      response.status,
+      `OpenRouter request failed (${response.status} ${response.statusText}): ${text}`,
+    );
   }
 
   return (await response.json()) as OpenRouterCompletionResponse;
